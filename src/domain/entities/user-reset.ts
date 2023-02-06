@@ -1,7 +1,7 @@
-import { Indexable } from '../generics/indexable';
+import { Entity } from '../generics/entity';
 import { User } from './user';
 
-export type UserReset = Indexable & {
+export type UserReset = Entity & {
   userId: User['id'];
   password: User['password'];
   code: string;

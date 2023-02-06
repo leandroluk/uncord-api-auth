@@ -3,8 +3,8 @@ import { User } from './user';
 
 export type UserProfile = Updatable & {
   userId: User['id'];
-  photoURL?: string;
   name: string;
+  photoURL?: string;
   country?: string;
   state?: string;
   city?: string;

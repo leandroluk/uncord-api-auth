@@ -1,0 +1,28 @@
+{
+  "name": "undef-api-auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leandroluk/undef-api-auth.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leandroluk/undef-api-auth/issues"
+  },
+  "homepage": "https://github.com/leandroluk/undef-api-auth#readme",
+  "devDependencies": {
+    "@commitlint/cli": "17.4.2",
+    "@commitlint/config-conventional": "17.4.2",
+    "commitlint": "17.4.2",
+    "cz-conventional-changelog": "3.3.0",
+    "husky": "^8.0.0"
+  }
+}

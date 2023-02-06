@@ -28,6 +28,7 @@
     "@typescript-eslint/method-signature-style": "off",
     "@typescript-eslint/prefer-nullish-coalescing": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/no-redeclare": "off",
     "@typescript-eslint/comma-dangle": [
       "error",
       "always-multiline"

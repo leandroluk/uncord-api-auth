@@ -21,7 +21,8 @@
   "ts-node": {
     "require": [
       "tsconfig-paths/register",
-      "dotenv/config"
+      "dotenv/config",
+      "polyfill-json-stringify-omit-null-value"
     ]
   },
   "include": [

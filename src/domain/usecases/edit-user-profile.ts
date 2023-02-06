@@ -1,6 +1,6 @@
+import { UserProfile } from '../entities/user-profile';
 import { AuthorizedHeader } from '../generics/authorized-header';
 import { Entity } from '../generics/entity';
-import { UserProfile } from '../models/user-profile';
 
 /**
  * @see https://github.com/leandroluk/undef-api-auth/wiki/%5BCSU010%5D-Edit-*UserProfile*

@@ -1,5 +1,5 @@
+import { UserConfirm } from '../entities/user-confirm';
 import { Indexable } from '../generics/indexable';
-import { UserConfirm } from '../models/user-confirm';
 
 /**
  * @see https://github.com/leandroluk/undef-api-auth/wiki/%5BCSU003%5D-Confirm-email

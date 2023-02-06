@@ -1,4 +1,4 @@
-import { User } from '../models/user';
+import { User } from '../entities/user';
 
 /**
  * @see https://github.com/leandroluk/undef-api-auth/wiki/%5BCSU002%5D-Send-confirm-email

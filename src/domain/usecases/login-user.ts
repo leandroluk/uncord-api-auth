@@ -1,5 +1,5 @@
+import { User } from '../entities/user';
 import { BearerAuth } from '../generics/bearer-auth';
-import { User } from '../models/user';
 
 /**
  * @see https://github.com/leandroluk/undef-api-auth/wiki/%5BCSU004%5D-Login-*User*

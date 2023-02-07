@@ -7,7 +7,7 @@ CREATE TABLE "user_profile" (
   "country"    VARCHAR(50)  NULL,
   "state"      VARCHAR(50)  NULL,
   "city"       VARCHAR(50)  NULL,
-  "place"      VARCHAR(200) NULL,
+  "place"      VARCHAR(100) NULL,
   "number"     VARCHAR(50)  NULL,
   "complement" VARCHAR(50)  NULL,
   "zip_code"   CHAR(8)      NULL

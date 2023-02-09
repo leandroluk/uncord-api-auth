@@ -1,4 +1,4 @@
-import { CreateUuidContract } from '$/data/adapters/create-uuid';
+import { CreateUuidContract } from '$/data/contracts/create-uuid';
 import crypto from 'crypto';
 
 export class CreateUuidContractImpl implements CreateUuidContract {

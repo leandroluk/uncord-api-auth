@@ -3,7 +3,7 @@ import { Search } from '$/domain/generics/search';
 import { EntityTarget, ObjectLiteral, SelectQueryBuilder } from 'typeorm';
 import { typeormDataSource } from './data-source';
 
-type OperatorFn = (field: string, value: never) => [string, ObjectLiteral];
+type OperatorFn = (field: string, value: any) => [string, ObjectLiteral];
 
 export const typeormHelper = {
   operatorsMap: {
@@ -27,8 +27,10 @@ export const typeormHelper = {
     entity: EntityTarget<T>,
     query: Search.Query<T>,
     availableFields?: Array<string & keyof T>,
+    fullTextFields?: Partial<Array<string & keyof T>>,
   ): SelectQueryBuilder<T> {
     if (!availableFields) availableFields = typeormHelper.getAvailableFields(entity);
+    if (!fullTextFields) fullTextFields = typeormHelper.getFullTextFields(entity);
 
     let fields: string[] = availableFields;
 
@@ -43,6 +45,17 @@ export const typeormHelper = {
       .from(entity, 'x')
       .select(fields.map(field => `x.${field}`))
       .where('1 = 1');
+
+    if (query.text) {
+      // see: https://www.freecodecamp.org/news/fuzzy-string-matching-with-postgresql/
+      const matcher = fullTextFields
+        .map(field => [
+          `x.${field} ILIKE :perc`,
+          `SOUNDEX(x.${field}), SOUNDEX(:raw) > 4`,
+          `LEVENSHTEIN(LOWER(x.${field}), LOWER(:raw)) < 4`,
+        ]).flatMap(inner => inner).join(' OR ');
+      builder = builder.andWhere(`(${matcher})`, { raw: query.text, perc: `%${query.text}%` });
+    }
 
     if (query.where) {
       Object.entries(query.where).forEach(([field, condition]) => {

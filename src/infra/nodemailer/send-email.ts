@@ -1,8 +1,8 @@
-import { SendEmailContract } from '$/data/adapters/send-email';
-import { createTransport, SentMessageInfo, Transporter } from 'nodemailer';
+import { SendEmailContract } from '$/data/contracts/send-email';
+import nodemailer from 'nodemailer';
 
 export class SendEmailContractImpl implements SendEmailContract {
-  private readonly transporter: Transporter<SentMessageInfo>;
+  private readonly transporter: nodemailer.Transporter<nodemailer.SentMessageInfo>;
 
   constructor (
     private readonly smtp: string,
@@ -11,7 +11,7 @@ export class SendEmailContractImpl implements SendEmailContract {
     private readonly username: string,
     private readonly password: string,
   ) {
-    this.transporter = createTransport({
+    this.transporter = nodemailer.createTransport({
       host: this.smtp,
       port: this.port,
       secure: this.secure,

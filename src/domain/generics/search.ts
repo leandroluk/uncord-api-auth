@@ -9,6 +9,9 @@ export type XOR<T, U> = (T | U) extends object
   : T | U;
 
 export namespace Search {
+  export type FullText = {
+    text?: string;
+  };
   export namespace Operators {
     export namespace Match {
       export type Positive = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'like';
@@ -37,7 +40,7 @@ export namespace Search {
     export type Fields<T extends Indexable> = XOR<Fields.Select<T>, Fields.Remove<T>>;
     export type Sort<T extends Indexable> = { [K in keyof T]?: -1 | 1; };
   }
-  export type Query<T extends Indexable> = Pagination & {
+  export type Query<T extends Indexable> = FullText & Pagination & {
     where?: Query.Where<T>;
     fields?: Query.Fields<T>;
     sort?: Query.Sort<T>;

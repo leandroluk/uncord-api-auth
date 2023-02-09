@@ -7,11 +7,9 @@ export class CheckEmailInUseTaskImpl implements CheckEmailInUseTask {
     private readonly getUserRepo: GetUserRepo,
   ) {}
 
-  async check(email: string): Promise<void> {
+  async check(email: CheckEmailInUseTask.Email): Promise<void> {
     const user = await this.getUserRepo.get({
-      email: {
-        eq: email,
-      },
+      email: { eq: email },
     });
     if (user) {
       throw new ConflitError(`Email "${email}" already in use`);

@@ -1,12 +1,12 @@
 import { AddUserConfirmTask } from '$/presentation/tasks/add-user-confirm';
-import { CreateRandomStringContract } from '../adapters/create-random-string';
-import { CreateUuidContract } from '../adapters/create-uuid';
+import { CreateRandomStringContract } from '../contracts/create-random-string';
+import { CreateUuidContract } from '../contracts/create-uuid';
 import { AddUserConfirmRepo } from '../repos/add-user-confirm';
 
 export class AddUserConfirmTaskImpl implements AddUserConfirmTask {
   constructor (
     private readonly createUuidContract: CreateUuidContract,
-    private readonly createRandomString: CreateRandomStringContract,
+    private readonly createRandomStringContract: CreateRandomStringContract,
     private readonly addUserConfirmRepo: AddUserConfirmRepo,
     private readonly codeLength: number,
     private readonly expiresAt: number,
@@ -16,7 +16,7 @@ export class AddUserConfirmTaskImpl implements AddUserConfirmTask {
     const now = new Date();
     const [id, code] = await Promise.all([
       this.createUuidContract.create(),
-      this.createRandomString.create(this.codeLength),
+      this.createRandomStringContract.create(this.codeLength),
     ]);
     const userConfirm: AddUserConfirmTask.Result = {
       id,

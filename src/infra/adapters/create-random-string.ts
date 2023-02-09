@@ -1,4 +1,4 @@
-import { CreateRandomStringContract } from '$/data/adapters/create-random-string';
+import { CreateRandomStringContract } from '$/data/contracts/create-random-string';
 import crypto from 'crypto';
 
 export class CreateRandomStringContractImpl implements CreateRandomStringContract {

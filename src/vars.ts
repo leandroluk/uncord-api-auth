@@ -1,4 +1,4 @@
-import packageJson from 'package.json';
+import packageJson from '../package.json';
 const { env, cwd } = process;
 
 const mailPort = Number(env.MAIL_PORT ?? 587);

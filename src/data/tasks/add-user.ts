@@ -1,6 +1,6 @@
 import { AddUserTask } from '$/presentation/tasks/add-user';
-import { CreateRandomStringContract } from '../adapters/create-random-string';
-import { CreateUuidContract } from '../adapters/create-uuid';
+import { CreateRandomStringContract } from '../contracts/create-random-string';
+import { CreateUuidContract } from '../contracts/create-uuid';
 import { AddUserRepo } from '../repos/add-user';
 
 export class AddUserTaskImpl implements AddUserTask {

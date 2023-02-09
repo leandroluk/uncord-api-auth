@@ -1,4 +1,4 @@
-import { ConfirmEmailTemplateContract } from '$/data/adapters/confirm-email-template';
+import { ConfirmEmailTemplateContract } from '$/data/contracts/confirm-email-template';
 import fs from 'fs';
 import Mustache from 'mustache';
 

@@ -41,8 +41,8 @@ export const registerUserFactory = (): RegisterUser => {
       vars.default.codeExpiresAt,
     );
     const confirmEmailTemplateContract = new ConfirmEmailTemplateContractImpl(
-      path.resolve(vars.path, 'main', 'templates', 'confirm.html'),
-      path.resolve(vars.path, 'main', 'templates', 'confirm.txt'),
+      path.resolve(vars.path, 'src', 'main', 'templates', 'confirm.html'),
+      path.resolve(vars.path, 'src', 'main', 'templates', 'confirm.txt'),
     );
     const sendEmailContract = new SendEmailContractImpl(
       vars.mail.smtp,

@@ -1,6 +1,7 @@
 import { User } from '../entities/user';
 
 /**
+ * @alias [CSU007] Send reset password email
  * @see https://github.com/leandroluk/undef-api-auth/wiki/%5BCSU007%5D-Send-reset-password-email
  */
 export type SendResetPasswordEmail = {

@@ -1,6 +1,6 @@
 import { SendConfirmEmailTask } from '$/presentation/tasks/send-confirm-email';
-import { ConfirmEmailTemplateContract } from '../adapters/confirm-email-template';
-import { SendEmailContract } from '../adapters/send-email';
+import { ConfirmEmailTemplateContract } from '../contracts/confirm-email-template';
+import { SendEmailContract } from '../contracts/send-email';
 
 export class SendConfirmEmailTaskImpl implements SendConfirmEmailTask {
   constructor (
@@ -12,9 +12,9 @@ export class SendConfirmEmailTaskImpl implements SendConfirmEmailTask {
   ) {}
 
   async send(data: SendConfirmEmailTask.Data): Promise<void> {
-    const link = `${this.confirmURL}?email=${data.email}&code:${data.confirmCode}`;
+    const confirmURL = `${this.confirmURL}?email=${data.email}&confirmCode=${data.confirmCode}`;
     const { html, text } = await this.confirmEmailTemplateContract.render({
-      confirmURL: link,
+      confirmURL,
       password: data.password,
     });
     await this.sendEmailContract.send({

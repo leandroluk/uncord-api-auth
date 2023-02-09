@@ -2,6 +2,7 @@ import { AuthorizedHeader } from '../generics/authorized-header';
 import { File } from '../generics/File';
 
 /**
+ * @alias [CSU011] Add *UserProfile* photo
  * @see https://github.com/leandroluk/undef-api-auth/wiki/%5BCSU011%5D-Add-*UserProfile*-photo
  */
 export type AddUserProfilePhoto = {

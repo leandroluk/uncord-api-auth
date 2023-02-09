@@ -1,7 +1,9 @@
 import { UserProfile } from '$/domain/entities/user-profile';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { TABLE_USER_PROFILE } from '../constants';
+import { FullTextFields } from '../decorators';
 
+@FullTextFields('name', 'country', 'state', 'city', 'place', 'number', 'complement', 'zipCode')
 @Entity(TABLE_USER_PROFILE)
 export class UserProfileEntity implements UserProfile {
   @PrimaryGeneratedColumn('uuid')

@@ -4,11 +4,11 @@ import { SendEmailContract } from '../contracts/send-email';
 
 export class SendConfirmEmailTaskImpl implements SendConfirmEmailTask {
   constructor (
-    private readonly confirmURL: string,
     private readonly confirmEmailTemplateContract: ConfirmEmailTemplateContract,
+    private readonly sendEmailContract: SendEmailContract,
+    private readonly confirmURL: string,
     private readonly sendFrom: string,
     private readonly sendSubject: string,
-    private readonly sendEmailContract: SendEmailContract,
   ) {}
 
   async send(data: SendConfirmEmailTask.Data): Promise<void> {

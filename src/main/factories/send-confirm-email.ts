@@ -64,11 +64,11 @@ export const sendConfirmEmailFactory = (): SendConfirmEmailUseCase => {
       vars.mail.password,
     );
     const sendConfirmEmailTask = new SendConfirmEmailTaskImpl(
-      vars.mail.confirmURL,
       confirmEmailTemplateContract,
-      vars.mail.from,
-      vars.mail.resetSubject,
       sendEmailContract,
+      vars.mail.confirmURL,
+      vars.mail.from,
+      vars.mail.confirmSubject,
     );
     instance = new SendConfirmEmailUseCaseImpl(
       getUserTask,

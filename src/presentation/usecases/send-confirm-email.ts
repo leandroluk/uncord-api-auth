@@ -21,22 +21,23 @@ export class SendConfirmEmailUseCaseImpl implements SendConfirmEmailUseCase {
     let user = await this.getUserTask.get({
       email: { eq: data.body.email },
     });
+    let userConfirm: GetUserConfirmTask.Result | ResetUserConfirmTask.Result;
     try {
-      const userConfirm = await this.getUserConfirmTask.get({
+      userConfirm = await this.getUserConfirmTask.get({
         userId: { eq: user.id },
       });
       await this.resetUserConfirmTask.reset(userConfirm.id);
     } catch (error) {
       if (!NotFoundError.is(error)) throw error;
       user = await this.resetUserTask.reset(user.id);
-      const userConfirm = await this.addUserConfirmTask.add({
+      userConfirm = await this.addUserConfirmTask.add({
         userId: user.id,
       });
-      await this.sendConfirmEmailTask.send({
-        confirmCode: userConfirm.code,
-        email: user.email,
-        password: user.password,
-      });
     }
+    await this.sendConfirmEmailTask.send({
+      confirmCode: userConfirm.code,
+      email: user.email,
+      password: user.password,
+    });
   }
 }

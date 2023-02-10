@@ -17,7 +17,6 @@ const enum ContentType {
   Json = 'application/json',
 }
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
 const commonResponses: OpenAPIV3.ResponsesObject = {
   400: {
     description: 'Bad Request',
@@ -125,7 +124,7 @@ const docs: OpenAPIV3.Document = {
   tags: [{ name: TagType.Auth }],
   paths: {
     // api
-    '/api/register': {
+    '/register': {
       post: {
         operationId: 'CSU001',
         summary: 'Register *User*',
@@ -154,7 +153,7 @@ const docs: OpenAPIV3.Document = {
         },
       },
     },
-    '/api/confirm': {
+    '/confirm': {
       patch: {
         operationId: 'CSU002',
         summary: 'Send confirm email',
@@ -180,39 +179,6 @@ const docs: OpenAPIV3.Document = {
           200: { description: 'Ok' },
           400: commonResponses[400],
           404: commonResponses[404],
-        },
-      },
-    },
-    // default
-    '/health': {
-      get: {
-        responses: {
-          200: {
-            description: 'Application is healthy',
-            content: {
-              [ContentType.Json]: {
-                schema: {
-                  type: 'object',
-                  required: ['name', 'version', 'env', 'uptime'],
-                  properties: {
-                    name: { type: 'string' },
-                    version: { type: 'string' },
-                    env: { type: 'string' },
-                    uptime: { type: 'string' },
-                  },
-                },
-                example: {
-                  name: vars.app.name,
-                  version: vars.app.version,
-                  env: vars.app.env,
-                  uptime: '1m',
-                },
-              },
-            },
-          },
-          500: {
-            description: 'Application is unhealthy',
-          },
         },
       },
     },

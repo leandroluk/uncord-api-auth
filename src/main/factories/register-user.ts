@@ -49,11 +49,11 @@ export const registerUserFactory = (): RegisterUserUseCase => {
       vars.mail.password,
     );
     const sendConfirmEmailTask = new SendConfirmEmailTaskImpl(
-      vars.mail.confirmURL,
       confirmEmailTemplateContract,
+      sendEmailContract,
+      vars.mail.confirmURL,
       vars.mail.from,
       vars.mail.confirmSubject,
-      sendEmailContract,
     );
     instance = new RegisterUserUseCaseImpl(
       checkEmailInUseTask,

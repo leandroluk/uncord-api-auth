@@ -4,18 +4,18 @@ import { registerUserValidator } from '$/main/validation/validators/register-use
 import { sendConfirmEmailValidator } from '$/main/validation/validators/send-confirm-email';
 import { Router } from 'express';
 
-const authRoutes = Router();
+const apiRoutes = Router();
 
-authRoutes.post('/register', async (req, res) => {
+apiRoutes.post('/register', async (req, res) => {
   const data = await registerUserValidator(req);
   await registerUserFactory().register(data);
   res.sendStatus(201);
 });
 
-authRoutes.patch('/confirm', async (req, res) => {
+apiRoutes.patch('/confirm', async (req, res) => {
   const data = await sendConfirmEmailValidator(req);
   await sendConfirmEmailFactory().send(data);
   res.sendStatus(200);
 });
 
-export default authRoutes;
+export default apiRoutes;

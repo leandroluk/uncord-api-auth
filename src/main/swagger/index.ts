@@ -124,7 +124,7 @@ const docs: OpenAPIV3.Document = {
   tags: [{ name: TagType.Auth }],
   paths: {
     // api
-    '/register': {
+    '/api/register': {
       post: {
         operationId: 'CSU001',
         summary: 'Register *User*',
@@ -153,7 +153,7 @@ const docs: OpenAPIV3.Document = {
         },
       },
     },
-    '/confirm': {
+    '/api/confirm': {
       patch: {
         operationId: 'CSU002',
         summary: 'Send confirm email',
@@ -179,6 +179,40 @@ const docs: OpenAPIV3.Document = {
           200: { description: 'Ok' },
           400: commonResponses[400],
           404: commonResponses[404],
+        },
+      },
+    },
+    // default
+    '/health': {
+      get: {
+        summary: 'Health check',
+        responses: {
+          200: {
+            description: 'Application is healthy',
+            content: {
+              [ContentType.Json]: {
+                schema: {
+                  type: 'object',
+                  required: ['name', 'version', 'env', 'uptime'],
+                  properties: {
+                    name: { type: 'string' },
+                    version: { type: 'string' },
+                    env: { type: 'string' },
+                    uptime: { type: 'string' },
+                  },
+                },
+                example: {
+                  name: vars.app.name,
+                  version: vars.app.version,
+                  env: vars.app.env,
+                  uptime: '1m',
+                },
+              },
+            },
+          },
+          500: {
+            description: 'Application is unhealthy',
+          },
         },
       },
     },

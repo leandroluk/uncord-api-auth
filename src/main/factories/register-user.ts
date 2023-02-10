@@ -12,6 +12,7 @@ import { AddUserConfirmRepoImpl } from '$/infra/typeorm/repos/add-user-confirm';
 import { GetUserRepoImpl } from '$/infra/typeorm/repos/get-user-repo';
 import { RegisterUserUseCaseImpl } from '$/presentation/usecases/register-user';
 import vars from '$/vars';
+import fs from 'fs';
 import path from 'path';
 
 let instance: RegisterUserUseCase;
@@ -37,9 +38,10 @@ export const registerUserFactory = (): RegisterUserUseCase => {
       addUserConfirmRepo,
       vars.default.codeExpiresAt,
     );
+    const confirmPath = path.resolve(vars.path, 'src', 'main', 'templates', 'confirm');
     const confirmEmailTemplateContract = new ConfirmEmailTemplateContractImpl(
-      path.resolve(vars.path, 'src', 'main', 'templates', 'confirm.html'),
-      path.resolve(vars.path, 'src', 'main', 'templates', 'confirm.txt'),
+      fs.readFileSync(path.resolve(confirmPath, 'html'), 'utf8'),
+      fs.readFileSync(path.resolve(confirmPath, 'txt'), 'utf8'),
     );
     const sendEmailContract = new SendEmailContractImpl(
       vars.mail.smtp,

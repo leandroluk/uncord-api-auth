@@ -4,7 +4,7 @@ import vars from '$/vars';
 import { Router } from 'express';
 import ms from 'ms';
 import swaggerUI from 'swagger-ui-express';
-import authRoutes from './auth/auth.routes';
+import authRoutes from './auth';
 
 const routes = Router();
 

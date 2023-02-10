@@ -2,10 +2,16 @@ import { ConflitError } from '$/domain/errors/conflit';
 import { ForbiddenError } from '$/domain/errors/forbidden';
 import { NotFoundError } from '$/domain/errors/not-found';
 import { UnauthorizedError } from '$/domain/errors/unauthorized';
+import { RegisterUserUseCase } from '$/domain/usecases/register-user';
+import { SendConfirmEmailUseCase } from '$/domain/usecases/send-confirm-email';
 import vars from '$/vars';
 import { OpenAPIV3 } from 'openapi-types';
 import { ObjectSchema } from './types/object-schema';
 import { SimpleError } from './types/simple-error';
+
+const enum TagType {
+  Auth = 'auth',
+}
 
 const enum ContentType {
   Json = 'application/json',
@@ -14,7 +20,7 @@ const enum ContentType {
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const commonResponses: OpenAPIV3.ResponsesObject = {
   400: {
-    description: 'bad request',
+    description: 'Bad Request',
     content: {
       [ContentType.Json]: {
         schema: {
@@ -33,7 +39,7 @@ const commonResponses: OpenAPIV3.ResponsesObject = {
     },
   },
   401: {
-    description: 'unauthorized',
+    description: 'Unauthorized',
     content: {
       [ContentType.Json]: {
         schema: {
@@ -52,7 +58,7 @@ const commonResponses: OpenAPIV3.ResponsesObject = {
     },
   },
   403: {
-    description: 'forbidden',
+    description: 'Forbidden',
     content: {
       [ContentType.Json]: {
         schema: {
@@ -71,7 +77,7 @@ const commonResponses: OpenAPIV3.ResponsesObject = {
     },
   },
   404: {
-    description: 'not found',
+    description: 'Not Found',
     content: {
       [ContentType.Json]: {
         schema: {
@@ -90,7 +96,7 @@ const commonResponses: OpenAPIV3.ResponsesObject = {
     },
   },
   409: {
-    description: 'conflit',
+    description: 'Conflit',
     content: {
       [ContentType.Json]: {
         schema: {
@@ -116,8 +122,67 @@ const docs: OpenAPIV3.Document = {
     title: vars.app.name,
     version: vars.app.version,
   },
-  tags: [],
+  tags: [{ name: TagType.Auth }],
   paths: {
+    // api
+    '/api/register': {
+      post: {
+        operationId: 'CSU001',
+        summary: 'Register *User*',
+        externalDocs: { url: 'https://github.com/leandroluk/undef-api-auth/wiki/%5BCSU001%5D-Register-*User*' },
+        tags: [TagType.Auth],
+        requestBody: {
+          content: {
+            [ContentType.Json]: {
+              schema: {
+                type: 'object',
+                required: ['email'],
+                properties: {
+                  email: { type: 'string' },
+                },
+              } satisfies ObjectSchema<RegisterUserUseCase.Data['body']>,
+              example: {
+                email: 'user@email.com',
+              } satisfies RegisterUserUseCase.Data['body'],
+            },
+          },
+        },
+        responses: {
+          201: { description: 'Created' },
+          400: commonResponses[400],
+          409: commonResponses[409],
+        },
+      },
+    },
+    '/api/confirm': {
+      patch: {
+        operationId: 'CSU002',
+        summary: 'Send confirm email',
+        externalDocs: { url: 'https://github.com/leandroluk/undef-api-auth/wiki/%5BCSU002%5D-Send-confirm-email' },
+        tags: [TagType.Auth],
+        requestBody: {
+          content: {
+            [ContentType.Json]: {
+              schema: {
+                type: 'object',
+                required: ['email'],
+                properties: {
+                  email: { type: 'string' },
+                },
+              } satisfies ObjectSchema<SendConfirmEmailUseCase.Data['body']>,
+              example: {
+                email: 'user@email.com',
+              } satisfies SendConfirmEmailUseCase.Data['body'],
+            },
+          },
+        },
+        responses: {
+          200: { description: 'Ok' },
+          400: commonResponses[400],
+          404: commonResponses[404],
+        },
+      },
+    },
     // default
     '/health': {
       get: {

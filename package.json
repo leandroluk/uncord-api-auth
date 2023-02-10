@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch src --ext ts --exec \"ts-node src\"",
+    "dev": "nodemon --watch src --ext ts,txt,html --exec \"ts-node src\"",
     "prepare": "husky install",
     "lint": "eslint '*.{js,ts}' --fix",
     "build": "webpack build",

@@ -1,12 +1,12 @@
-import { AddUserTask } from '$/presentation/tasks/add-user';
+import { AddUserWithProfileTask } from '$/presentation/tasks/add-user-with-profile';
 import { mockUser } from 'mocks/domain/entities/user';
 
-export class AddUserTaskMock implements AddUserTask {
+export class AddUserWithProfileTaskMock implements AddUserWithProfileTask {
   constructor (
-    public $add: AddUserTask.Result = { ...mockUser },
+    public $add: AddUserWithProfileTask.Result = { ...mockUser },
   ) {}
 
-  async add(_data: AddUserTask.Data): Promise<AddUserTask.Result> {
+  async add(_data: AddUserWithProfileTask.Data): Promise<AddUserWithProfileTask.Result> {
     return this.$add;
   }
 }

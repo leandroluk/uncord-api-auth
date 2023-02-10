@@ -1,0 +1,4 @@
+You password is "{{password}}";
+
+Access the link {{confirmURL}} to Confirm e-mail.
+

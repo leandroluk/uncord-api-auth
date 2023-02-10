@@ -6,11 +6,8 @@ const logger = winston.createLogger({
   format: winston.format.json(),
   defaultMeta: { app: vars.app },
   transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({
-      filename: '.logs/log.json',
-      level: 'debug',
-    }),
+    new winston.transports.Console({ level: 'debug' }),
+    new winston.transports.File({ level: 'error', filename: '.logs/log.json' }),
   ],
 });
 

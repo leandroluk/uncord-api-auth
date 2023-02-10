@@ -1,36 +1,36 @@
-import { RegisterUser } from '$/domain/usecases/register-user';
-import { RegisterUserImpl } from '$/presentation/usecases/register-user';
-import { AddUserTaskMock } from 'mocks/presentation/tasks/add-user';
+import { RegisterUserUseCase } from '$/domain/usecases/register-user';
+import { RegisterUserUseCaseImpl } from '$/presentation/usecases/register-user';
+import { AddUserWithProfileTaskMock } from 'mocks/presentation/tasks/add-user';
 import { AddUserConfirmTaskMock } from 'mocks/presentation/tasks/add-user-confirm';
 import { CheckEmailInUseTaskMock } from 'mocks/presentation/tasks/check-email-in-use';
 import { SendConfirmEmailTaskMock } from 'mocks/presentation/tasks/send-confirm-email';
 
 const makeSut = (): {
   checkEmailInUseTask: CheckEmailInUseTaskMock;
-  addUserTask: AddUserTaskMock;
+  addUserWithProfileTask: AddUserWithProfileTaskMock;
   addUserConfirmTask: AddUserConfirmTaskMock;
   sendConfirmEmailTask: SendConfirmEmailTaskMock;
-  sut: RegisterUserImpl;
-  data: RegisterUser.Data;
+  sut: RegisterUserUseCaseImpl;
+  data: RegisterUserUseCase.Data;
 } => {
   const checkEmailInUseTask = new CheckEmailInUseTaskMock();
-  const addUserTask = new AddUserTaskMock();
+  const addUserWithProfileTask = new AddUserWithProfileTaskMock();
   const addUserConfirmTask = new AddUserConfirmTaskMock();
   const sendConfirmEmailTask = new SendConfirmEmailTaskMock();
-  const sut = new RegisterUserImpl(
+  const sut = new RegisterUserUseCaseImpl(
     checkEmailInUseTask,
-    addUserTask,
+    addUserWithProfileTask,
     addUserConfirmTask,
     sendConfirmEmailTask,
   );
-  const data: RegisterUser.Data = {
+  const data: RegisterUserUseCase.Data = {
     body: {
       email: 'email',
     },
   };
   return {
     checkEmailInUseTask,
-    addUserTask,
+    addUserWithProfileTask,
     addUserConfirmTask,
     sendConfirmEmailTask,
     sut,
@@ -38,16 +38,16 @@ const makeSut = (): {
   };
 };
 
-describe('RegisterUserImpl', () => {
+describe('RegisterUserUseCaseImpl', () => {
   it('Should throw if checkEmailInUseTask.check throws', async () => {
     const { sut, checkEmailInUseTask, data } = makeSut();
     jest.spyOn(checkEmailInUseTask, 'check').mockRejectedValue(new Error());
     await expect(sut.register(data)).rejects.toThrow();
   });
 
-  it('Should throw if addUserTask.add throws', async () => {
-    const { sut, addUserTask, data } = makeSut();
-    jest.spyOn(addUserTask, 'add').mockRejectedValue(new Error());
+  it('Should throw if addUserWithProfileTask.add throws', async () => {
+    const { sut, addUserWithProfileTask, data } = makeSut();
+    jest.spyOn(addUserWithProfileTask, 'add').mockRejectedValue(new Error());
     await expect(sut.register(data)).rejects.toThrow();
   });
 

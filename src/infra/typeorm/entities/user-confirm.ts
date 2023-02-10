@@ -19,7 +19,7 @@ export class UserConfirmEntity implements UserConfirm {
   @Column({ name: 'user_id' })
   userId: string;
 
-  @Column()
+  @Column({ name: 'code' })
   code: string;
 
   @Column({ name: 'expires_in', type: 'timestamptz' })

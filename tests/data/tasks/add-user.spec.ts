@@ -1,5 +1,5 @@
-import { AddUserTaskImpl } from '$/data/tasks/add-user';
-import { AddUserTask } from '$/presentation/tasks/add-user';
+import { AddUserWithProfileTaskImpl } from '$/data/tasks/add-user-with-profile';
+import { AddUserWithProfileTask } from '$/presentation/tasks/add-user-with-profile';
 import { CreateRandomStringContractMock } from 'mocks/data/contracts/create-random-string';
 import { CreateUuidContractMock } from 'mocks/data/contracts/create-uuid';
 import { AddUserRepoMock } from 'mocks/data/repos/add-user';
@@ -8,19 +8,19 @@ const makeSut = (): {
   createUuidContract: CreateUuidContractMock;
   createRandomStringContract: CreateRandomStringContractMock;
   addUserRepo: AddUserRepoMock;
-  sut: AddUserTaskImpl;
-  data: AddUserTask.Data;
+  sut: AddUserWithProfileTaskImpl;
+  data: AddUserWithProfileTask.Data;
 } => {
   const createUuidContract = new CreateUuidContractMock();
   const createRandomStringContract = new CreateRandomStringContractMock();
   const addUserRepo = new AddUserRepoMock();
-  const sut = new AddUserTaskImpl(
+  const sut = new AddUserWithProfileTaskImpl(
     createUuidContract,
     createRandomStringContract,
     addUserRepo,
     10,
   );
-  const data: AddUserTask.Data = {
+  const data: AddUserWithProfileTask.Data = {
     email: 'email',
   };
   return {
@@ -32,7 +32,7 @@ const makeSut = (): {
   };
 };
 
-describe('AddUserTaskImpl', () => {
+describe('AddUserWithProfileTaskImpl', () => {
   it('Should throw if createUuidContract.create throws', async () => {
     const { sut, createUuidContract, data } = makeSut();
     jest.spyOn(createUuidContract, 'create').mockRejectedValue(new Error());

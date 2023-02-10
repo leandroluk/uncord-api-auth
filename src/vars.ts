@@ -13,6 +13,7 @@ const vars = {
     env: env.NODE_ENV /* default 'development' */,
   },
   default: {
+    randomPasswordLength: Number(env.DEFAULT_CODE_LENGTH ?? 10),
     codeLength: Number(env.DEFAULT_CODE_LENGTH ?? 50),
     codeExpiresAt: Number(env.DEFAULT_CODE_EXPIRES_AT ?? 1000 * 60 * 60 * 24),
   },
@@ -33,7 +34,7 @@ const vars = {
     privateKey: env.JWT_PRIVATE_KEY ?? 'secret',
     publicKey: env.JWT_PUBLIC_KEY ?? 'secret',
     algorithm: env.JWT_AUGORITHM ?? 'HS256',
-    audience: env.JWT_AUDIENCE ?? 'http://localhost:3000',
+    audience: env.JWT_AUDIENCE ?? 'http://localhost:3000/auth/confirm',
     issuer: env.JWT_ISSUER ?? 'issuer',
     accessTTL: Number(env.JWT_ACCESS_TTL ?? 1000 * 60 * 10), // default 10 minutes
     refreshTTL: Number(env.JWT_REFRESH_TTL ?? 1000 * 60 * 60 * 24 * 14), // default 14 days

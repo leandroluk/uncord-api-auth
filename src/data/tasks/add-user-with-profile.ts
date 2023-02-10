@@ -1,9 +1,9 @@
-import { AddUserTask } from '$/presentation/tasks/add-user';
+import { AddUserWithProfileTask } from '$/presentation/tasks/add-user-with-profile';
 import { CreateRandomStringContract } from '../contracts/create-random-string';
 import { CreateUuidContract } from '../contracts/create-uuid';
 import { AddUserRepo } from '../repos/add-user';
 
-export class AddUserTaskImpl implements AddUserTask {
+export class AddUserWithProfileTaskImpl implements AddUserWithProfileTask {
   constructor (
     private readonly createUuidContract: CreateUuidContract,
     private readonly createRandomStringContract: CreateRandomStringContract,
@@ -11,18 +11,18 @@ export class AddUserTaskImpl implements AddUserTask {
     private readonly randomPasswordLength: number,
   ) {}
 
-  async add(data: AddUserTask.Data): Promise<AddUserTask.Result> {
+  async add(data: AddUserWithProfileTask.Data): Promise<AddUserWithProfileTask.Result> {
     const now = new Date();
-    const [id, randomPasswordLength] = await Promise.all([
+    const [id, password] = await Promise.all([
       this.createUuidContract.create(),
       this.createRandomStringContract.create(this.randomPasswordLength),
     ]);
-    const user: AddUserTask.Result = {
+    const user: AddUserWithProfileTask.Result = {
       id,
       timestamp: now,
       createdAt: now,
       email: data.email,
-      password: randomPasswordLength,
+      password,
     };
     await this.addUserRepo.add(user);
     return user;

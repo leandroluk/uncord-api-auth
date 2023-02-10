@@ -1,34 +1,49 @@
 import { AddUserConfirmTaskImpl } from '$/data/tasks/add-user-confirm';
-import { AddUserWithProfileTaskImpl } from '$/data/tasks/add-user-with-profile';
-import { CheckEmailInUseTaskImpl } from '$/data/tasks/check-email-in-use';
+import { GetUserTaskImpl } from '$/data/tasks/get-user';
+import { GetUserConfirmTaskImpl } from '$/data/tasks/get-user-confirm';
+import { ResetUserTaskImpl } from '$/data/tasks/reset-user';
+import { ResetUserConfirmTaskImpl } from '$/data/tasks/reset-user-confirm';
 import { SendConfirmEmailTaskImpl } from '$/data/tasks/send-confirm-email';
-import { RegisterUserUseCase } from '$/domain/usecases/register-user';
+import { SendConfirmEmailUseCase } from '$/domain/usecases/send-confirm-email';
 import { CreateRandomStringContractImpl } from '$/infra/adapters/create-random-string';
 import { CreateUuidContractImpl } from '$/infra/adapters/create-uuid';
 import { ConfirmEmailTemplateContractImpl } from '$/infra/mustache/confirm-email-template';
 import { SendEmailContractImpl } from '$/infra/nodemailer/send-email';
-import { AddUserRepoImpl } from '$/infra/typeorm/repos/add-user';
 import { AddUserConfirmRepoImpl } from '$/infra/typeorm/repos/add-user-confirm';
+import { EditUserRepoImpl } from '$/infra/typeorm/repos/edit-user';
+import { EditUserConfirmRepoImpl } from '$/infra/typeorm/repos/edit-user-confirm';
+import { GetUserConfirmRepoImpl } from '$/infra/typeorm/repos/get-user-confirm-repo';
 import { GetUserRepoImpl } from '$/infra/typeorm/repos/get-user-repo';
-import { RegisterUserUseCaseImpl } from '$/presentation/usecases/register-user';
+import { SendConfirmEmailUseCaseImpl } from '$/presentation/usecases/send-confirm-email';
 import vars from '$/vars';
 import path from 'path';
 
-let instance: RegisterUserUseCase;
+let instance: SendConfirmEmailUseCase;
 
-export const registerUserFactory = (): RegisterUserUseCase => {
+export const sendConfirmEmailFactory = (): SendConfirmEmailUseCase => {
   if (!instance) {
     const getUserRepo = new GetUserRepoImpl();
-    const checkEmailInUseTask = new CheckEmailInUseTaskImpl(
+    const getUserTask = new GetUserTaskImpl(
       getUserRepo,
     );
+    const getUserConfirmRepo = new GetUserConfirmRepoImpl();
+    const getUserConfirmTask = new GetUserConfirmTaskImpl(
+      getUserConfirmRepo,
+    );
     const createUuidContract = new CreateUuidContractImpl();
+    const editUserConfirmRepo = new EditUserConfirmRepoImpl();
     const createRandomStringContract = new CreateRandomStringContractImpl();
-    const addUserRepo = new AddUserRepoImpl();
-    const addUserWithProfileTask = new AddUserWithProfileTaskImpl(
+    const resetUserConfirmTask = new ResetUserConfirmTaskImpl(
+      getUserConfirmRepo,
       createUuidContract,
+      editUserConfirmRepo,
+      vars.default.codeExpiresAt,
+    );
+    const editUserRepo = new EditUserRepoImpl();
+    const resetUserTask = new ResetUserTaskImpl(
+      getUserRepo,
       createRandomStringContract,
-      addUserRepo,
+      editUserRepo,
       vars.default.randomPasswordLength,
     );
     const addUserConfirmRepo = new AddUserConfirmRepoImpl();
@@ -52,12 +67,14 @@ export const registerUserFactory = (): RegisterUserUseCase => {
       vars.mail.confirmURL,
       confirmEmailTemplateContract,
       vars.mail.from,
-      vars.mail.confirmSubject,
+      vars.mail.resetSubject,
       sendEmailContract,
     );
-    instance = new RegisterUserUseCaseImpl(
-      checkEmailInUseTask,
-      addUserWithProfileTask,
+    instance = new SendConfirmEmailUseCaseImpl(
+      getUserTask,
+      getUserConfirmTask,
+      resetUserConfirmTask,
+      resetUserTask,
       addUserConfirmTask,
       sendConfirmEmailTask,
     );
